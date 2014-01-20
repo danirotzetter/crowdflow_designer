@@ -1,0 +1,20 @@
+<!-- Majority voting: define threshold -->
+<div class="control-group"
+     data-ng-class="{error: form.mergerData.$dirty && form.mergerData.$error.required}"><label
+        class="control-label" for="mergerData">Threshold: minimum of votes required in order to accept an answer</label>
+
+    <div class="controls">
+        <div class="input-append">
+        <input type="number"
+               class="percentage"
+               data-ng-model="item.data" id="mergerData"
+               min="0"
+               max="100"
+               name="mergerData" required/>
+            <span class="add-on">%</span>
+        </div>
+        <div data-ng-show="form.mergerData.$dirty && form.mergerData.$invalid"
+             class="form-error-message">Invalid:<span
+                data-ng-show="form.mergerData.$error.required">This field is mandatory</span></div>
+    </div>
+</div>

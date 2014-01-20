@@ -1,0 +1,105 @@
+<div data-ng-controller="SplitterCtrl">
+    <!--Modal form header-->
+    <div class="modal-header">
+        <!--Add-->
+        <div data-ng-show="action=='add'">
+            <h1>Add {{ item.type }}</h1>
+        </div>
+        <!--Edit-->
+        <div data-ng-show="action=='edit'">
+            <h1>Edit {{ item.type }}</h1>
+        </div>
+        <!--Delete-->
+        <div data-ng-show="action=='delete'">
+            <h1>Delete {{ item.type }}</h1>
+        </div>
+    </div>
+
+
+    <!--Modal form body-->
+    <div class="modal-body">
+
+
+    <h2>Splitter {{ item.id }} details</h2>
+
+
+<form name="form" novalidate class="form-horizontal">
+    <div data-ng-model="item" id="splitter">
+
+        <!--Name-->
+            <div class="control-group"
+                 data-ng-class="{error: form.splitterName.$dirty && form.splitterName.$error.required}"><label
+                    class="control-label" for="splitterName">Splitter name</label>
+
+                <div class="controls"><input type="text" data-ng-model="item.name" id="splitterName" name="splitterName"
+                                             required>
+
+                    <div data-ng-show="form.splitterName.$dirty && form.splitterName.$invalid"
+                         class="form-error-message">Invalid:<span
+                            data-ng-show="form.splitterName.$error.required">This field is mandatory</span></div>
+                </div>
+            </div>
+
+        <!--Description-->
+            <div class="control-group"
+                 data-ng-class="{error: form.splitterDescription.$dirty && form.splitterDescription.$error.required}">
+                <label class="control-label" for="splitterDescription">Splitter description</label>
+
+                <div class="controls"><textarea rows="8" cols="60"
+                                                class="input-xlarge"
+                                                data-ng-model="item.description" id="splitterDescription"
+                                                name="splitterDescription" required></textarea>
+
+                    <div data-ng-show="form.splitterDescription.$dirty && form.splitterDescription.$invalid"
+                         class="form-error-message">Invalid:<span
+                            data-ng-show="form.splitterDescription.$error.required">This field is mandatory</span>
+                    </div>
+                </div>
+            </div>
+
+
+        <!--Crowd-sourcing parameters -->
+        <fieldset data-collapse="!(item.splitter_type_id==-1)"> <!-- No splitter type can be crowd-sourced so far -->
+            <!--Restriction to show this form part only if the splitter is a crowd-sourcing task itself-->
+            <legend>Define the crowd-sourcing parameters</legend>
+            <div class="control-group" data-ng-repeat="parameter in parameters" data-collapse="{{ '!('+parameter.show+')'}}">
+                <label class="control-label">{{ parameter.label }}</label>
+                <div class="controls"><input type="{{parameter.type}}" data-ng-model="item.parameters[parameter.id]" data-ng-disabled="{{parameter.disabled}}">
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</form>
+
+<hr>
+<h2>Splits into <div data-ng-show="item.connections.length>0">{{ item.connections.length }} targets</div></h2>
+<div data-cs-connection-info="{displayFrom:false, details:'short'}" data-ng-model="connectionOut" data-ng-repeat="connectionOut in item.connections"/>
+<div data-ng-hide="item.connections.length>0">No split output connections defined yet.</div>
+
+
+
+</div>
+
+<!--Modal form footer-->
+<div class="modal-footer">
+
+    <!--Add/ edit-->
+    <button data-ng-click="save()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='add' || action=='edit'"
+            class="btn btn-primary">
+        Save
+    </button>
+
+    <!--Delete-->
+    <button data-ng-click="delete()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='delete'"
+            class="btn btn-danger">
+        Delete item
+    </button>
+
+    <button class="btn btn-warning cancel" data-ng-click="cancel()">Cancel</button>
+</div>
+</div>
+<!--End controller-->

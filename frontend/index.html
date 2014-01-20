@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="eng" data-ng-app="CrowdsourcingManagement">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!--Stylesheets-->
+    <link rel="stylesheet" href="lib/bootstrap-combined.min.css">
+    <link rel="stylesheet" href="lib/angular-ui/angular-ui.css"/>
+
+
+    <!-- DropDown (Select2) -->
+    <link href="lib/select2.css" media="all" type="text/css" rel="stylesheet">
+
+    <!--Custom TODO check if ok: was right after bootstrap-combined-min.css-->
+    <link rel="stylesheet" href="css/csBootstrap.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+
+    <!--JQuery plugin-->
+    <link rel="stylesheet" href="lib/bootstrap-switch.css">
+
+    <!--Libraries-->
+    <!--JQuery-->
+    <script src="lib/jquery.js"></script>
+    <script src="lib/jquery-ui.js"></script>
+    <!--Controls-->
+    <script src="lib/select2.js"></script>
+    <!--AngularJS-->
+    <script src="lib/angular.js"></script>
+    <script src="lib/angular-resource.js"></script>
+    <script src="lib/ui-bootstrap.js"></script>
+    <script src="lib/angular-ui/angular-ui.js"></script>
+    <!--JSPlumb-->
+    <script src="lib/jquery.jsPlumb-1.4.1-all.js"></script>
+    <!--JQuery plugin-->
+    <script src="lib/bootstrap-switch.min.js"></script>
+
+
+    <!--Application-->
+    <script src="js/app.js"></script>
+
+    <!--Controllers-->
+    <script src="js/controllers/AppCtrl.js"></script>
+    <script src="js/controllers/HomeCtrl.js"></script>
+    <script src="js/controllers/WorkspaceManagementCtrl.js"></script>
+    <script src="js/controllers/ComposeCtrl.js"></script>
+    <script src="js/controllers/ConnectionCtrl.js"></script>
+    <script src="js/controllers/ItemCtrl.js"></script>
+    <script src="js/controllers/TaskCtrl.js"></script>
+    <script src="js/controllers/DialogCtrl.js"></script>
+    <script src="js/controllers/DatasourceCtrl.js"></script>
+    <script src="js/controllers/MergerCtrl.js"></script>
+    <script src="js/controllers/PostprocessorCtrl.js"></script>
+    <script src="js/controllers/SplitterCtrl.js"></script>
+    <script src="js/controllers/WorkspaceCtrl.js"></script>
+    <script src="js/controllers/CrowdsourcerCtrl.js"></script>
+    <script src="js/controllers/PostprocessorCtrl.js"></script>
+    <script src="js/controllers/MacrotaskCtrl.js"></script>
+    <script src="js/controllers/CsManagementCtrl.js"></script>
+    <script src="js/controllers/ResultsCtrl.js"></script>
+
+    <!--Services-->
+    <script src="js/services/ToolsService.js"></script>
+    <script src="js/services/LogService.js"></script>
+    <script src="js/services/PlatformsService.js"></script>
+    <script src="js/services/RestService.js"></script>
+    <script src="js/services/ConfigService.js"></script>
+    <script src="js/services/TaskService.js"></script>
+    <script src="js/services/ComposeService.js"></script>
+    <script src="js/services/MergerService.js"></script>
+    <script src="js/services/DatasourceService.js"></script>
+    <script src="js/services/SplitterService.js"></script>
+    <script src="js/services/PostprocessorService.js"></script>
+    <script src="js/services/WorkspaceService.js"></script>
+    <script src="js/services/ConnectionService.js"></script>
+    <script src="js/services/MacrotaskService.js"></script>
+
+    <!--Directives-->
+    <script src="js/directives/composeItemDirective.js"></script>
+    <script src="js/directives/waitingDirective.js"></script>
+    <script src="js/directives/logDirective.js"></script>
+    <script src="js/directives/connectionOverlayDirective.js"></script>
+    <script src="js/directives/itemInfoDirective.js"></script>
+    <script src="js/directives/macrotaskInfoDirective.js"></script>
+    <script src="js/directives/workspaceInfoDirective.js"></script>
+    <script src="js/directives/connectionsListDirective.js"></script>
+    <script src="js/directives/connectionInfoDirective.js"></script>
+    <script src="js/directives/progressInfoDirective.js"></script>
+    <script src="js/directives/durationDirective.js"></script>
+    <script src="js/directives/paymentDirective.js"></script>
+    <script src="lib/bsSwitch.js"></script><!-- plugin -->
+
+    <!--Capture the mouse movements-->
+    <!--<script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter23296747 = new Ya.Metrika({id:23296747, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true, ut:"noindex"}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/23296747?ut=noindex" style="position:absolute; left:-9999px;" alt="" /></div></noscript>-->
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function (d, w, c) {
+            (w[c] = w[c] || []).push(function () {
+                try {
+                    w.yaCounter23296747 = new Ya.Metrika({
+                        id: 23296747,
+                        webvisor: true,
+                        clickmap: true,
+                        trackLinks: true,
+                        accurateTrackBounce: true,
+                        trackHash: true,
+                        ut: "noindex"
+                    });
+                } catch (e) {}
+            });
+            var n = d.getElementsByTagName("script")[0],
+                    s = d.createElement("script"),
+                    f = function () {
+                        n.parentNode.insertBefore(s, n);
+                    };
+            s.type = "text/javascript";
+            s.async = true;
+            s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+            if (w.opera == "[object Opera]") {
+                d.addEventListener("DOMContentLoaded", f, false);
+            } else {
+                f();
+            }
+        })
+                (document,
+                        window,
+                        "yandex_metrika_callbacks");
+    </script>
+    <noscript>
+        <div>
+            <img src="//mc.yandex.ru/watch/23296747?ut=noindex" style="position:absolute; left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- /Yandex.Metrika counter -->
+
+
+    <title>CrowdSourcing management tool</title>
+</head>
+
+<body data-ng-controller="AppCtrl">
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="banner">
+                <img src="img/banner.jpg" style="height:150px;"/>
+                </div>
+            <div class="menu">
+                <a href="#"><span><i class="icon-home icon-white"></i> Home</span></a>
+                <a href="#/workspaceManagement"><span><i class="icon-tasks icon-white"></i> Workspaces</span></a>
+                <a href="#/csManagement"><span><i class="icon-globe icon-white"></i> Cs-Management</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div id="partialView" data-ng-view data-ng-animate="{enter: 'view-enter', leave: 'view-leave'}"></div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+
+</body>
+
+</html>

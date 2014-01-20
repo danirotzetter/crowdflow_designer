@@ -1,0 +1,1 @@
+schtasks /create /sc minute /mo 1 /tn "WebApp" /tr <<TODEFINE:PATH_TO_SITE_ROOT>\cron\cronrun.bat 

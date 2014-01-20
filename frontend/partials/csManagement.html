@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="span5 offset1" id="mainPanel" data-cs-wait-for="isLoaded" data-ng-model="loadingMessage">
+        <h2 class="collapseHeader" data-ng-click="hidePlatformMetadata=!hidePlatformMetadata"><i
+                class="icon-eye-close icon-white"></i>Platform metadata (click to toggle)</h2>
+
+
+        <div data-collapse="hidePlatformMetadata">
+
+            <h3>Your account balance</h3>
+
+            <div data-cs-wait-for="balance!=undefined" id="accountBalance">{{ balance }}</div>
+        </div>
+
+
+        <h2 class="collapseHeader" data-ng-click="hidePublishedTasks=!hidePublishedTasks"><i
+                class="icon-eye-close icon-white"></i>Currently published tasks (click to toggle)</h2>
+        <div data-collapse="hidePublishedTasks">
+            <div data-cs-wait-for="tasks!=undefined" id="tasks">
+                <div data-ng-show="tasks.length==0">
+                    No task published on the crowd-sourcing platform
+                </div>
+                <div data-ng-repeat="task in tasks">
+                    <table class="table hit">
+                        <thead>
+                        <tr>
+                            <th>Property</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Title</td>
+                            <td>{{ task.Title }}</td>
+                        </tr>
+                        <tr>
+                            <td>HIT Id</td>
+                            <td>{{ task.HITId}}</td>
+                        </tr>
+                        <tr>
+                            <td>HIT type Id</td>
+                            <td>{{ task.HITTypeId}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>{{ task.Description}}</td>
+                        </tr>
+                        <tr>
+                            <td>Expiration</td>
+                            <td>{{ task.Expiration}}</td>
+                        </tr>
+                        <tr>
+                            <td>Delete</td>
+                            <td> <!--Delete-->
+                                <button data-ng-click="deleteTask('{{task.HITId}}')"
+                                        class="btn btn-danger">
+                                    Delete item
+                                </button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- End crowd-sourcing metadata -->
+
+
+        <h2 class="collapseHeader" data-ng-click="hideCsFunctions=!hideCsFunctions"><i
+                class="icon-eye-close icon-white"></i>Crowd-source management functions (click to toggle)</h2>
+
+        <div data-collapse="hideCsFunctions">
+            <div class="csFunctions">
+                <ul>
+                    <li data-ng-click="updateFlow()"><i class="icon-random icon-white"></i> Update the items flow</li>
+                    <li data-ng-click="deleteAllTasks()"><i class="icon-trash icon-white"></i> Delete all tasks on the crowd</li>
+                    <li data-ng-click="resetAllTasks()"><i class="icon-repeat icon-white"></i> Reset all tasks in the application</li>
+                    <!--<li data-ng-click="publishAllTasks()"><i class="icon-share icon-white"></i> Publish all tasks on the crowd-sourcing platform</li>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="span4">
+        <div data-cs-log="{type:'alert'}"></div>
+        <div data-cs-log="{type:'log'}"></div>
+    </div>
+</div>

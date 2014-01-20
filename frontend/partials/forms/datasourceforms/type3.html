@@ -1,0 +1,14 @@
+<!-- Datasource is a web service -->
+<div class="control-group" data-ng-collapse="item.output_media_type_id!=5 || item.output_determined!=0">
+    <label class="control-label" for="datasourceData">URL of the web service providing the data</label>
+    <div class="controls">
+        <textarea rows="8" cols="60"
+                  class="input-xlarge"
+                  data-ng-model="item.data" id="datasourceData"
+                  name="datasourceData" required></textarea>
+        <div data-ng-show="form.datasourceData.$dirty && form.datasourceData.$invalid"
+             class="form-error-message">Invalid:<span data-ng-show="form.datasourceData.$error.required">This field is mandatory</span>
+        </div>
+
+    </div>
+</div>

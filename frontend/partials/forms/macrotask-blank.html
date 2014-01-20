@@ -1,0 +1,43 @@
+<!--Form without header/ footer - used in workspace form-->
+<div data-ng-controller="MacrotaskCtrl">
+    <form name="form" novalidate class="form-horizontal">
+
+    <div data-ng-model="workspace.macrotask">
+
+        <!--Name-->
+        <div class="control-group"
+             data-ng-class="{error: form.macrotaskName.$dirty && form.macrotaskName.$error.required}"><label
+                class="control-label" for="macrotaskName">Give a macrotask name</label>
+
+            <div class="controls"><input type="text" data-ng-model="workspace.macrotask.name" id="macrotaskName" name="macrotaskName"
+                                         required>
+
+                <div data-ng-show="form.macrotaskName.$dirty && form.macrotaskName.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.macrotaskName.$error.required">This field is mandatory</span></div>
+            </div>
+        </div>
+
+
+        <!--Description-->
+        <div class="control-group"
+             data-ng-class="{error: form.macrotaskDescription.$dirty && form.macrotaskDescription.$error.required}">
+            <label class="control-label" for="macrotaskDescription">Describe the task in more detail</label>
+
+            <div class="controls"><textarea rows="8" cols="60"
+                                            class="input-xlarge"
+                                            data-ng-model="workspace.macrotask.description" id="macrotaskDescription"
+                                            name="macrotaskDescription" required></textarea>
+
+                <div data-ng-show="form.macrotaskDescription.$dirty && form.macrotaskDescription.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.macrotaskDescription.$error.required">This field is mandatory</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+</div>
+<!--End controller-->

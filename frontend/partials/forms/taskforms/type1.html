@@ -1,0 +1,17 @@
+<!-- Select one item among a given set of options -->
+<div class="control-group"
+     data-ng-class="{error: form.taskData.$dirty && form.taskData.$error.required}"
+        data-ng-collapse="!(
+         (item.output_media_type==3 && item.output_determined==1 && item.output_mapping_type_id==12 && item.output_ordered==0)
+         )"
+        >
+    <label class="control-label" for="taskData">Define the options/ categories</label>
+
+        <div class="controls" id="taskData">
+            <label data-ng-repeat="option in item.data track by $index">
+                <input type="text" id="{{'option'+$index}}" name="{{'option'+$index}}" data-ng-model="item.data[$index]"/>
+                <span>Option {{$index+1}}</span>
+            </label>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+<div data-ng-controller="MacrotaskCtrl">
+    <!--Modal form header-->
+    <div class="modal-header">
+        <!--Add-->
+        <div data-ng-show="action=='add'">
+            <h1>Add {{ item.type }}</h1>
+        </div>
+        <!--Edit-->
+        <div data-ng-show="action=='edit'">
+            <h1>Edit {{ item.type }}</h1>
+        </div>
+        <!--Delete-->
+        <div data-ng-show="action=='delete'">
+            <h1>Delete {{ item.type }}</h1>
+        </div>
+    </div>
+
+
+    <!--Modal form body-->
+    <div class="modal-body">
+
+        <h2>Macrotask {{ item.id }} details</h2>
+
+    <form name="form" novalidate class="form-horizontal">
+
+    <div data-ng-model="workspace.macrotask">
+
+        <!--Name-->
+        <div class="control-group"
+             data-ng-class="{error: form.macrotaskName.$dirty && form.macrotaskName.$error.required}"><label
+                class="control-label" for="macrotaskName">Give a macrotask name</label>
+
+            <div class="controls"><input type="text" data-ng-model="workspace.macrotask.name" id="macrotaskName" name="macrotaskName"
+                                         required>
+
+                <div data-ng-show="form.macrotaskName.$dirty && form.macrotaskName.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.macrotaskName.$error.required">This field is mandatory</span></div>
+            </div>
+        </div>
+
+
+        <!--Description-->
+        <div class="control-group"
+             data-ng-class="{error: form.macrotaskDescription.$dirty && form.macrotaskDescription.$error.required}">
+            <label class="control-label" for="macrotaskDescription">Describe the task in more detail</label>
+
+            <div class="controls"><textarea rows="8" cols="60"
+                                            class="input-xlarge"
+                                            data-ng-model="workspace.macrotask.description" id="macrotaskDescription"
+                                            name="macrotaskDescription" required></textarea>
+
+                <div data-ng-show="form.macrotaskDescription.$dirty && form.macrotaskDescription.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.macrotaskDescription.$error.required">This field is mandatory</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+
+</div>
+
+<!--Modal form footer-->
+<div class="modal-footer">
+
+    <!--Add/ edit-->
+    <button data-ng-click="save()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='add' || action=='edit'"
+            class="btn btn-primary">
+        Save
+    </button>
+
+    <!--Delete-->
+    <button data-ng-click="delete()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='delete'"
+            class="btn btn-danger">
+        Delete item
+    </button>
+
+    <button class="btn btn-warning cancel" data-ng-click="cancel()">Cancel</button>
+</div>
+</div>
+<!--End controller-->

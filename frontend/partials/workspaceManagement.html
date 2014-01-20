@@ -1,0 +1,32 @@
+<div data-cs-log="{type:'alert'}"></div>
+<div class="span12">
+    <button type="button" class="btn btn-primary"  data-ng-click="editWorkspace('add')"><i class="icon-plus"></i>Add new workspace</button>
+    <h3>List of available workspaces</h3>
+    <div data-cs-wait-for="loadComplete" data-ng-model="waitMessage" id="workspaces">
+        <div
+                    data-ng-repeat="workspaceItem in workspaces"
+                    data-ng-click="selectWorkspace(workspaceItem)"
+                    data-ng-class="{active: workspaceItem == workspace}"
+                    class="activeable workspace">
+                {{workspaceItem.name}}
+        </div>
+    </div>
+
+    <div class="workspaceDetails" data-ng-class="{fadeOut: workspace.id==undefined}">
+        <h3>Workspace details</h3>
+        <div data-cs-workspace-info data-ng-model="workspace"/>
+        <h3>Macrotask details</h3>
+        <div data-cs-macrotask-info data-ng-model="workspace.macrotask"/>
+        <div class="workspaceFunctions">
+            <h3>Workspace functions</h3>
+            <ul>
+                <li data-ng-click="editWorkspace('edit')"><i class="icon-pencil icon-white"></i> Edit workspace</li>
+                <li data-ng-click="editWorkspace('delete')"><i class="icon-trash icon-white"></i> Delete workspace</li>
+                <li data-ng-click="link('/compose/'+workspace.id)"><i class="icon-edit icon-white"></i> Manage task composition</li>
+                <li data-ng-click="link('/crowdsource/'+workspace.id)"><i class="icon-share icon-white"></i> Crowdsource the tasks</li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>

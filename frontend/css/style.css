@@ -1,0 +1,754 @@
+/* CSS Document */
+
+/* General elements */
+.inlineBlock{
+	display:inline-block;	
+}
+a:hover{
+    cursor: pointer;
+}
+.disabled{
+    cursor: not-allowed;
+}
+.textOk{
+    color: yellowgreen;
+}
+.textNotOk{
+    color: red;
+}
+
+/* Wait dialog */
+div.waitDialog{
+    display: inline-block;
+    margin:1em;
+    padding:2em;
+    color: #A5F0FF;
+    float:left;
+    position:absolute;/* Prevents display problems with anchor points of JSPlumb*/
+}
+div.waitDialog p, div.waitDialog div{
+    text-align: center;
+}
+div.waitDialog p img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Tooltip handling */
+.tooltipOwner div.tooltip{
+visibility: hidden;
+width:15em;
+    background-color: #eeeeee;
+    font-size: 12px;
+    padding: 0.4em;
+    color: #444;
+    border: 1px dotted gray;
+    opacity: 0.9;
+    z-index: 10;
+}
+.tooltip p{
+    font-size: 12px;
+}
+.tooltipOwner:hover div.tooltip{
+    visibility: visible;
+}
+
+.tooltipOwner div.tooltip .tooltip{
+    /* AngularUI tooltip: reset width */
+    width: inherit;
+}
+
+
+/* Page layout */
+div#partialView{
+	background:#003366;
+    /*In case the partial view only consists of floats, we have to set the overflow to auto. Otherwize, it will be collapsed and get height 0*/
+    overflow: auto;
+    box-shadow: 2px 3px 30px 13px #003686;
+    -webkit-box-shadow: 2px 3px 30px 13px #003686;
+    margin: 1em;
+    padding: 1em;
+}
+
+div#banner{
+ /*background-color: #1d4969;*/
+ background-color: #003366;
+    color: crimson;
+    font-family: Century Gothic, sans-serif;
+    padding: 1em;
+    margin: 0.5em;
+}
+div#banner h1{
+    font-size: 60px;
+    display: inline;
+    position: relative;
+    color: lightgray;
+    white-space: nowrap;
+}
+
+
+
+
+/*
+* Menu
+*/
+div.menu{
+    background-color: #225588;
+    color: #df8505;
+    padding: 1em 2em;
+    font-size: 140%;
+}
+div.menu a:hover{
+    text-decoration: none;
+}
+div.menu span{
+    background-color: rgba(0, 158, 197, 0.29);
+    padding: 0.5em;
+    box-shadow: 1px 1px 6px 0px #003C96;
+    -webkit-box-shadow: 1px 1px 6px 0px #003C96;
+}
+div.menu span:hover{
+    background-color: rgba(0, 121, 189, 1);
+    box-shadow: 2px 3px 30px 0px #2563BE;
+    -webkit-box-shadow: 2px 3px 30px 0px #2563BE;
+}
+
+
+/* Animation */
+.view-enter-setup, .view-leave-setup {
+    -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -moz-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    -o-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+    transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s;
+}
+.view-enter-setup {
+    opacity:0;
+}
+.view-enter-setup.view-enter-start {
+    opacity:1;
+}
+.view-leave-setup {
+    opacity:1;
+    display:none;
+}
+.view-leave-setup.view-leave-start {
+    opacity:0;
+}
+
+
+
+/* InfoBox for messages*/
+.infoBox{
+	margin:1em;
+	padding: 2em;
+	background:midnightblue;
+	border:1px dotted #FFFF00;
+    max-height: 20em;
+    overflow: auto;
+}
+
+/* Alert messages */
+div.message{
+    margin: 1em;
+    opacity: 1;
+}
+div.message.alert-dismissed{
+    opacity: 0;
+    transition:1s;
+}
+
+/* CsProviders */
+div.providerSelection{
+    background: #06c;
+    margin: 0 2em;
+    border:1px dotted #FFFF00;
+    padding: 3em 0.5em;
+}
+div.providerSelection div.select2-container{
+    min-width: 300px;
+}
+div.providerSelection{
+
+}
+div.providerSelection div.details{
+    background-color: navy;
+    /*margin: 0.5em 2em;*/
+    width: 50%;
+    padding:0 2em;
+    min-height: 600px;
+}
+div.providerSelection div.details dt{
+    float:left;
+}
+div.providerSelection div.details dd{
+    text-align:right;
+}
+
+
+
+/*
+Workspace and crowdsourcing management
+*/
+div#workspaces{
+    /* Containing the list of all available workspaces */
+    float:left;
+    width: 20%;
+}
+div.workspace{
+    margin: 1em;
+    background-color: #006699;
+    border: 1px solid #FFFF00;
+    padding:1em;
+}
+
+div.workspaceDetails {
+    /* Workspace selected: show details */
+    float:right;
+    width: 75%;
+    padding: 1em;
+    background-color: #006699;
+    opacity:1;
+    transition: 0.5s;
+    -webkit-transition:0.5s;
+}
+div.workspaceDetails.fadeOut{
+    /* No task selected: hide task details */
+    width:20%;
+    opacity:0;
+    transition: 0s;
+    -webkit-transition:0s;
+    transition-delay: 0s;
+    -webkit-transition-delay:0s;
+}
+
+div.workspaceFunctions ul, div.csFunctions ul{
+    margin: 0.5em;
+    list-style: none;
+}
+div.workspaceFunctions ul li, div.csFunctions ul li{
+    margin: 0.1em;
+    padding: 1.5em;
+    background-color: #069;
+    border: 1px solid #FF0;
+    transition:0.5;
+    -webkit-transition: 0.5s;
+}
+div.workspaceFunctions ul li:hover, div.csFunctions ul li:hover{
+    background-color: #1b911b;
+    border: 1px solid #FF0;
+    margin: 0.5em 0.1em;
+    transition:0.5;
+    -webkit-transition: 0.5s;
+    cursor: pointer;
+}
+div.workspaceFunctions ul li a:hover, div.csFunctions ul li a:hover{
+    text-decoration: none;
+}
+
+table.workspaceMetadata{
+    width: 80%;
+}
+
+
+
+
+/*
+* Composer
+*/
+
+
+div.mainPanelHeader{
+    background-color: #003152;
+    margin: 1em;
+    padding:1em;
+    box-shadow: 1px 1px 3px 3px #88B1BA;
+    -webkit-box-shadow: 1px 1px 3px 3px #88B1BA;
+    /*In case the partial view only consists of floats, we have to set the overflow to auto. Otherwize, it will be collapsed and get height 0*/
+    overflow: auto;
+}
+/* Panel header top elements to label buttons & controls */
+div.mainPanelHeader span{
+    color: #94e6ff;
+}
+
+div.workspaceMetadata{
+    background-color: #085477;
+    box-shadow: 1px 1px 3px 3px #88B1BA;
+    -webkit-box-shadow: 1px 1px 3px 3px #88B1BA;
+    padding:0 1em;
+    margin-top:1em;
+    float:left;
+    width: 40%;
+}
+div.composeLogs{
+    float:right;
+    width: 50%;
+}
+
+
+div.mainPanelBody{
+    background-color: #023B61;
+    padding:1em;
+    margin: 1em;
+    box-shadow: 3px 3px 5px 6px #067E96;
+    -webkit-box-shadow: 3px 3px 5px 6px #067E96;
+    min-height: 960px;
+}
+
+/* Table displaying the results of a workspace*/
+.table .property{
+    width: 90%;
+}
+
+
+/* Connections */
+div.connectionsContainer{
+    background-color: #003152;
+    margin: 1em;
+    padding:1em;
+    box-shadow: 1px 1px 3px 3px #88B1BA;
+    -webkit-box-shadow: 1px 1px 3px 3px #88B1BA;
+    /*In case the partial view only consists of floats, we have to set the overflow to auto. Otherwize, it will be collapsed and get height 0*/
+    overflow: auto;
+    font-size: 13px;
+}
+.connectionsContainer p{
+    font-size: 13px;
+    margin: 0;
+}
+div.connections h3{
+    background-color: #1864A3;;
+    padding: 0.5em;
+    border-top: 4px solid #95E3EE;
+}
+div.connections h4{
+    background-color: #304C63;
+    padding: 0.5em;
+    border-top: 2px solid #95E3EE;
+}
+
+    /* Tasks */
+div.taskList{
+    margin-left: 5em;
+}
+/* Within the composer, all tasks should have the same width */
+div.taskList div.task{
+    width:12em;
+    min-width: 0em;
+}
+div.task{
+    background-color: #006699;
+    border: 1px solid #FFFF00;
+    display: inline-block;
+    padding:1em;
+    min-width: 30em;
+}
+div.task div.hoverPart{
+    display:none;
+}
+div.task:hover div.hoverPart{
+    display:inline-block;
+}
+
+
+/* Mergers */
+div.mergerList{
+    margin-left: 25em;
+}
+div.merger{
+    background-color: #df8505;
+    display: inline-block;
+    padding:1em;
+}
+/* Splitters */
+div.splitterList{
+    margin-left: 25em;
+}
+div.splitter{
+    background-color: #46a546;
+    display: inline-block;
+    padding:1em;
+}
+/* Postprocessors */
+div.postprocessor{
+    background-color: #e4ea05;
+    display: inline-block;
+    color: #3A3939;
+    padding:1em;
+}
+/* Workspace result */
+div.workspace-result{
+    background-color: #2209A0;
+    border: 1px solid #FFFF00;
+    display: inline-block;
+    padding:2em;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: 0px 0px 30px 15px #94e6ff;
+    -webkit-box-shadow: 0px 0px 30px 15px #94e6ff;
+    box-shadow: 0px 0px 30px 15px #94e6ff;
+}
+#workspaceWrapper img{
+    background-color: #f5f5f5;
+}
+
+/* All items */
+div.postprocessor, div.task, div.splitter, div.merger, div.datasource, div.workspace{
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: 10px 10px 30px #001535;
+    -webkit-box-shadow: 10px 10px 30px #001535;
+    box-shadow: 10px 10px 30px #001535;
+}
+/* Highlights the item */
+.isNew{
+    animation: isNew 0.5s 6;
+    -webkit-animation: isNew 0.5s 6;
+}
+@keyframes isNew{
+    /* inspired by http://www.pepe-juergens.de/2013/02/css3-keyframe-animation/ */
+    0% {
+        -webkit-box-shadow: 0 0 16px 8px yellow;
+    }
+    50% {
+        -webkit-box-shadow: 0 0 16px 8px orangered;
+    }
+    100% {
+        -webkit-box-shadow: 0 0 16px 8px yellow;
+    }
+}
+@-webkit-keyframes isNew{
+    /* inspired by http://www.pepe-juergens.de/2013/02/css3-keyframe-animation/ */
+    0% {
+        -webkit-box-shadow: 0 0 16px 8px yellow;
+    }
+    50% {
+        -webkit-box-shadow: 0 0 16px 8px orangered;
+    }
+    100% {
+        -webkit-box-shadow: 0 0 16px 8px yellow;
+    }
+}
+
+
+/* Datasources */
+div.datasourcesList{
+    margin-left: 25em;
+}
+div.datasource{
+    background-color: #88d2ea;
+    color: #333;
+    display: inline-block;
+    padding:1em;
+    border: 2px solid #D3E0FF;
+}
+
+
+
+
+/* Overlay information */
+div.overlayBox{
+background-color: white;
+    line-height: 12px;
+    font-size: 12px;
+    padding: 0.4em;
+    font: 10px sans-serif;
+    color: #444;
+    border: 1px dotted gray;
+    opacity: 0.9;
+    z-index: 10;
+}
+div.overlayBox p{
+    font-size: 12px;
+}
+div.overlayBox h1{
+    margin: 0;
+    font-size: 12px;
+    /*line-height: 12px;*/
+}
+
+/* Show toolbar only if hovered */
+div.overlayBox div.hoverPart, div.overlayBox:hover div.hoverPart{
+    display: none;
+}
+div.overlayBox:hover div.hoverPart{
+    display: block;
+}
+div.overlayBox:hover div.nonHoverPart{
+    display: none;
+}
+
+/* Endpoints */
+div.endpointOut{
+    width: 10px;
+    height: 5px;
+}
+div.endpointIn{
+}
+
+
+
+
+
+/* Endpoint highlighting */
+.dropAllowed.destinationPossible{
+/*Used by jsPlumb*/
+    border-radius:12px;
+    animation: glowItGreen 0.5s infinite;
+    -webkit-border-radius:12px;
+    -webkit-animation: glowItGreen 0.5s infinite;
+}
+.destinationPossible{
+/*Used by webApp. Needed since jsPlumb removes the .dropAllowed class using javascript */
+    border-radius:12px;
+    animation: glowItGreen 2s infinite;
+    -webkit-border-radius:12px;
+    -webkit-animation: glowItGreen 2s infinite;
+}
+@-webkit-keyframes glowItGreen{
+    /* inspired by http://www.pepe-juergens.de/2013/02/css3-keyframe-animation/ */
+    0% {
+        background-color: yellowgreen;
+        -webkit-box-shadow: 0 0 16px 8px yellowgreen;
+    }
+    50% {
+        background-color: green;
+        -webkit-box-shadow: 0 0 16px 8px green;
+    }
+    100% {
+        background-color: yellowgreen;
+        -webkit-box-shadow: 0 0 16px 8px yellowgreen;
+    }
+}
+@keyframes glowItGreen{
+    /* inspired by http://www.pepe-juergens.de/2013/02/css3-keyframe-animation/ */
+    0% {
+        background-color: yellowgreen;
+        -webkit-box-shadow: 0 0 16px 8px yellowgreen;
+    }
+    50% {
+        background-color: green;
+        -webkit-box-shadow: 0 0 16px 8px green;
+    }
+    100% {
+        background-color: yellowgreen;
+        -webkit-box-shadow: 0 0 16px 8px yellowgreen;
+    }
+}
+.dropDenied{
+/*Used by jsPlumb*/
+    border-radius:12px;
+    animation: glowItRed 2s infinite;
+    -webkit-border-radius:12px;
+    -webkit-animation: glowItRed 2s infinite;
+}
+.destinationImpossible{
+/*Used by webApp. Needed since jsPlumb removes the .dropDenied class using javascript */
+    display: none;
+}
+@-webkit-keyframes glowItRed{
+    0% {
+        background-color: orange;
+        -webkit-box-shadow: 0 0 16px 8px orange;
+    }
+    50% {
+        background-color: orangered;
+        -webkit-box-shadow: 0 0 16px 8px orangered;
+    }
+    100% {
+        background-color: orange;
+        -webkit-box-shadow: 0 0 16px 8px orange;
+    }
+}
+@keyframes glowItRed{
+    0% {
+        background-color: orange;
+        -webkit-box-shadow: 0 0 16px 8px orange;
+    }
+    50% {
+        background-color: orangered;
+        -webkit-box-shadow: 0 0 16px 8px orangered;
+    }
+    100% {
+        background-color: orange;
+        -webkit-box-shadow: 0 0 16px 8px orange;
+    }
+}
+
+
+/** Forms **/
+.control-group.indented, div.indented{
+    margin-left:3em;
+}
+
+span.disabled{
+    color: #cec89a;
+}
+legend{
+    color: inherit;
+}
+
+/* Item-specific forms */
+textarea#datasourceData{
+    width: 90%;
+}
+/* Display a percentage number */
+input.percentage{
+    width:3em;
+}
+
+
+/** End forms **/
+
+
+
+
+
+
+/** START CROWDSOURCER **/
+div.activeable{
+ /* The way an item that can be crowdsourced is displayed in the list */
+    margin: 0.5em 0em;
+    transition: 0.5;
+    -webkit-transition: 0.51s;
+    min-width: 100%;
+    cursor: pointer;
+}
+div.active{
+    /* The item currently being edited */
+    background-color: #1b911b;
+    border: 1px solid #FF0;
+    margin: 1.5em 0em;
+    transition:0.5;
+    -webkit-transition: 0.51s;
+}
+h2.collapseHeader{
+    cursor: pointer;
+}
+h2.collapseHeader, h2.csForm, h3.csForm{
+    background-color: #5E87C5;
+    padding: 0.5em;
+    moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+.unconstraintWidth{
+    width:inherit;
+}
+div.inputData{
+    /*overflow-x: scroll;*/
+    /*overflow-y: scroll;*/
+    /*max-height: 1200px;*/
+    /*max-width: 600px;*/
+}
+
+
+div.crowdsourceTaskPanel{
+    background-color: #88d2ea;
+    color: #333;
+    display: inline-block;
+    padding:1em;
+    margin: 1em;
+    border: 2px solid #D3E0FF;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: 10px 10px 30px #001535;
+    -webkit-box-shadow: 10px 10px 30px #001535;
+    box-shadow: 10px 10px 30px #001535;
+}
+div.crowdsourceTaskPanel h1, div.crowdsourceTaskPanel h2, div.crowdsourceTaskPanel h3, div.crowdsourceTaskPanel h4{
+    color: #333;
+}
+div.taskInfo{
+    float:left;
+}
+.table .table.parameters tr td, .table .table.platformData tr td{
+    /* Item values that are too long are broken to new lines */
+    max-width: 30em;
+    word-wrap: break-word;
+}
+
+.table .table.parameters, .table .table.platformData{
+    background: none;
+    border:none;
+    max-width: 35em;
+}
+.task .parametersTableDiv, .task .platformDataTableDiv{
+background-color: #5B91BB;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 2px solid #d3e0ff;
+}
+.postprocessor .parametersTableDiv, .postprocessor .platformDataTableDiv{
+background-color: #fff9aa;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 2px solid #d3e0ff;
+}
+
+.merger .parametersTableDiv, .merger .platformDataTableDiv{
+    background-color: #c58312;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 2px solid #d3e0ff;
+}
+.mergerInfo .merger{
+    background-color: #5E3E12;
+}
+
+.table td.total{
+    border-bottom: 5px double #DDD;
+}
+
+.table.hit{
+    max-width: 30em;
+}
+
+div.taskFormPreview{
+    background-color: #2B4F75;
+    padding: 3em;
+    margin: 3em;
+    border: 1px solid;
+}
+
+
+/* ProgressInfo styling */
+.assignmentInfo{
+    position:absolute;
+    color: black;
+    min-width: 15em;
+}
+.progress.active{
+    background-color: inherit;
+    border: inherit;
+    margin: inherit;
+    transition: 0;
+    -webkit-transition: 0s;
+    width: 14em;
+}
+.progress .bar{
+    position: relative;
+}
+.assignmentInfo{
+    margin-top: -4em; /* Setting the progressBar on top of the 'main' item element */
+}
+.assignmentInfo div.keys{
+    margin-top: 0em;
+    color:#BAEFFC;
+}
+.assignmentInfo div.progress{
+    margin-top:1.5em;
+    background-image: linear-gradient(to bottom, #384963, #282F4D);
+}
+.assignmentInfo div{
+    position: absolute;
+}
+
+/** END CROWDSOURCER **/
+
+

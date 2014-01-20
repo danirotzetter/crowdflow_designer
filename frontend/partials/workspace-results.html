@@ -1,0 +1,125 @@
+<!--Modal form header-->
+<div class="modal-header">
+    <h1>Final results of this workspace</h1>
+</div>
+
+
+<!--Modal form body-->
+<div class="modal-body" data-cs-wait-for="isLoaded" data-ng-model="loadingMessage" id="modal-body">
+    <!--Display the most recent log message, if any-->
+    <div data-cs-log="{type:'alert'}"></div>
+
+    <!--Switch between detail level-->
+    <div class="control-group">
+        <h2>Results detail level</h2>
+        <div class="controls">
+            <label>
+                <input type="radio" id="detailedResultsTrue" name="detailedResults" value="1"
+                       data-ng-model="detailed"/>
+                <span>Extended results (incl. metadata)</span>
+            </label>
+            <label>
+                <input type="radio" id="detailedResultsFalse" name="detailedResults" value="0"
+                       data-ng-model="detailed"/>
+                <span>Simple results (only the 'actual' values)</span>
+            </label>
+        </div>
+    </div>
+
+    <!--Display the flow metadata-->
+    <h2>Flow metadata</h2>
+
+    <h3>Data about items</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="property">Property</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="(id, property) in flowData" data-ng-show="id=='items_total_count' || id=='items_task_count' || id=='items_merger_count' || id=='items_splitter_count' || id=='items_postprocessor_count' || id=='items_datasource_count'">
+                <td class="property">{{property.name}}</td>
+                <td data-ng-class="{total:id=='items_total_count'}">{{property.value}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Data about items published on the crowd-sourcing platform</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="property">Property</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="(id, property) in flowData" data-ng-show="id=='cs_count' || id=='cs_running'">
+                <td class="property">{{property.name}}</td>
+                <td data-ng-class="{total:id=='cs_count'}">{{property.value}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Data about assignments of the crowd-sourcing platform</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="property">Property</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="(id, property) in flowData" data-ng-show="id=='cs_assignments_expected' || id=='cs_assignments_submitted' || id=='cs_assignments_approved' || id=='cs_assignments_pending'">
+                <td class="property">{{property.name}}</td>
+                <td data-ng-class="{total:id=='cs_assignments_submitted'}">{{property.value}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Data about rewards and payments</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th class="property">Property</th>
+            <th>Value</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr data-ng-repeat="(id, property) in flowData" data-ng-show="id=='cs_reward_expected_actual' || id=='cs_reward_total_actual' || id=='cs_reward_expected_avg' || id=='cs_reward_total_avg'">
+                <td class="property">{{property.name}}</td>
+                <td data-ng-class="{total:id=='cs_reward_total_actual'}">{{property.value}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--Display the actual results-->
+    <h2>Result data</h2>
+    <div data-ng-show="results.length==0">
+        No results available yet
+    </div>
+    <div data-ng-repeat="result in results">
+        Result {{$index+1}}. : {{result}}
+    </div>
+</div>
+
+<!--Modal form footer-->
+<div class="modal-footer">
+
+    <!--Download results-->
+    <a download="results.txt" ng-href="{{ downloadUrl }}">
+    <button class="btn btn-primary" data-ng-disabled="!isLoaded" download="results.txt" data-ng-click="'{{downloadUrl}}'">
+        <i class="icon-download-alt icon-white"></i>Download
+    </button></a>
+
+    <!--Close dialog-->
+    <button data-ng-click="close()"
+            class="btn btn-warning">
+        Close dialog
+    </button>
+
+</div>
+
+
+
+

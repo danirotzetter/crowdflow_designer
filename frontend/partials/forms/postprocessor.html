@@ -1,0 +1,166 @@
+    <div data-ng-controller="PostprocessorCtrl">
+    <!--Modal form header-->
+    <div class="modal-header">
+        <!--Add-->
+        <div data-ng-show="action=='add'">
+            <h1>Add {{ item.type }}</h1>
+        </div>
+        <!--Edit-->
+        <div data-ng-show="action=='edit'">
+            <h1>Edit {{ item.type }}</h1>
+        </div>
+        <!--Delete-->
+        <div data-ng-show="action=='delete'">
+            <h1>Delete {{ item.type }}</h1>
+        </div>
+    </div>
+
+
+    <!--Modal form body-->
+    <div class="modal-body">
+
+
+        <h2>Postprocessor {{ item.id }} details</h2>
+
+        <form name="form" novalidate class="form-horizontal">
+            <div data-ng-model="item" id="postprocessor">
+
+                <!--Name-->
+                <div class="control-group"
+                     data-ng-class="{error: form.postprocessorName.$dirty && form.postprocessorName.$error.required}">
+                    <label
+                            class="control-label" for="postprocessorName">Postprocessor name</label>
+
+                    <div class="controls"><input type="text" data-ng-model="item.name" id="postprocessorName"
+                                                 name="postprocessorName"
+                                                 required>
+
+                        <div data-ng-show="form.postprocessorName.$dirty && form.postprocessorName.$invalid"
+                             class="form-error-message">Invalid:<span
+                                data-ng-show="form.postprocessorName.$error.required">This field is mandatory</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Description-->
+                <div class="control-group"
+                     data-ng-class="{error: form.postprocessorDescription.$dirty && form.postprocessorDescription.$error.required}">
+                    <label class="control-label" for="postprocessorDescription">Postprocessor description</label>
+
+                    <div class="controls"><textarea rows="8" cols="60"
+                                                    class="input-xlarge"
+                                                    data-ng-model="item.description" id="postprocessorDescription"
+                                                    name="postprocessorDescription" required></textarea>
+
+                        <div data-ng-show="form.postprocessorDescription.$dirty && form.postprocessorDescription.$invalid"
+                             class="form-error-message">Invalid:<span
+                                data-ng-show="form.postprocessorDescription.$error.required">This field is mandatory</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--Postprocessor type-->
+                <div class="control-group">
+                    <label class="control-label" for="postprocessorType">Postprocessor type</label>
+
+                    <div class="controls">
+                        <select data-ui-select2
+                                class="input-xlarge"
+                                data-ng-model="postprocessorType"
+                                id="postprocessorType"
+                                name="postprocessorType"
+                                data-style="btn-primary"
+                                data-ng-options="type.name for (id, type) in postprocessorTypes"
+                                required>
+                        </select>
+                    </div>
+                </div>
+
+                <!--Postprocessor Subtypes-->
+                <div class="control-group">
+                    <label class="control-label">Postprocessor sub-type</label>
+
+                    <div class="controls">
+                        <select data-ui-select2
+                                class="input-xlarge"
+                                data-ng-model="item.postprocessor_type_id"
+                                id="postprocessorSubType"
+                                name="postprocessorSubType"
+                                data-style="btn-primary"
+                                required>
+                            <option data-ng-repeat="subType in postprocessorType.subTypes" data-ng-disabled="subType.id!=12" value="{{subType.id}}">
+                                {{subType.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <!--Validation type-->
+                <div class="control-group indented"
+                     data-collapse="item.postprocessor_type_id < 11 || item.postprocessor_type_id>19">
+                    <label class="control-label" for="validationType">Choose the validation type</label>
+
+                    <div class="controls">
+                        <select data-ui-select2
+                                class="input-xlarge"
+                                data-ng-model="validationType"
+                                id="validationType"
+                                name="validationType"
+                                data-style="btn-primary"
+                                required>
+                            <option data-ng-repeat="type in validationTypes" data-ng-disabled="type.id!=1" value="{{type.id}}">{{type.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <!--Crowd-sourcing parameters -->
+                <fieldset data-collapse="!(item.postprocessor_type_id==11 || item.postprocessor_type_id==12)">
+                    <!--Restriction to show this form part only if the postprocessr is a crowd-sourcing task itself-->
+                    <legend>Define the crowd-sourcing parameters</legend>
+                    <div class="control-group" data-ng-repeat="parameter in parameters"
+                         data-collapse="{{ '!('+parameter.show+')'}}"
+                            >
+                        <label class="control-label">{{ parameter.label }}</label>
+
+                        <div class="controls">
+                            <input name="par{{parameter.id}}" id="par{{parameter.id}}" type="{{parameter.type}}"
+                                   data-ng-model="item.parameters[parameter.id]" data-ng-disabled="{{parameter.disabled}}"
+                                   min="{{parameter.min}}" step="{{parameter.step}}">
+                        <div data-ng-show="parameter.isDuration" data-ng-model="item.parameters[parameter.id]" data-cs-duration/>
+                            <div data-ng-show="parameter.id=='reward'" data-ng-model="item" data-cs-payment/>
+                        </div>
+                    </div>
+                </fieldset>
+
+            </div>
+        </form>
+
+    </div>
+
+    <!--Modal form footer-->
+    <div class="modal-footer">
+
+        <!--Add/ edit-->
+        <button data-ng-click="save()"
+                data-ng-disabled="form.$invalid"
+                data-ng-show="action=='add' || action=='edit'"
+                class="btn btn-primary">
+            Save
+        </button>
+
+        <!--Delete-->
+        <button data-ng-click="delete()"
+                data-ng-disabled="form.$invalid"
+                data-ng-show="action=='delete'"
+                class="btn btn-danger">
+            Delete item
+        </button>
+
+        <button class="btn btn-warning cancel" data-ng-click="cancel()">Cancel</button>
+    </div>
+</div>
+<!--End controller-->

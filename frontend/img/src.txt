@@ -1,0 +1,10 @@
+arrow_down http://www.iconfinder.com/icondetails/61499/24/arrow_down_download_icon
+false http://www.iconfinder.com/icondetails/12607/48/close_delete_error_exit_false_incorrect_remove_icon
+accept http://www.iconfinder.com/icondetails/17871/128/apply_check_clean_clear_correct_ok_ready_valid_yes_icon
+arrow-right http://www.iconfinder.com/icondetails/11140/32/arrow_green_up_icon
+outgoing_small http://www.iconfinder.com/icondetails/28333/256/arrow_bottom_download_icon
+merger http://www.iconfinder.com/icondetails/35682/32/arrow_join_icon
+splitter http://www.iconfinder.com/icondetails/35678/32/arrow_divide_icon
+inputs http://www.iconfinder.com/icondetails/18330/128/documents_folder_icon
+task_input http://www.iconfinder.com/icondetails/95875/32/arrow_document_down_icon
+finish https://www.iconfinder.com/icons/172465/finish_flag_goal_icon#size=256

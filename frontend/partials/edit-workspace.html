@@ -1,0 +1,162 @@
+<!--Modal form header-->
+<div class="modal-header">
+    <!--Add-->
+    <div data-ng-show="action=='add'">
+        <h1>Create a new workspace</h1>
+    </div>
+    <!--Edit-->
+    <div data-ng-show="action=='edit'">
+        <h1>Edit workspace {{ workspace.name }}</h1>
+    </div>
+    <!--Delete-->
+    <div data-ng-show="action=='delete'">
+        <h1>Delete workspace {{ workspace.name}}</h1>
+    </div>
+</div>
+
+
+<!--Modal form body-->
+<div class="modal-body">
+
+    <form name="form" novalidate class="form-horizontal">
+
+        <!--Name-->
+        <div class="control-group"
+             data-ng-class="{error: form.workspaceName.$dirty && form.workspaceName.$error.required}"><label
+                class="control-label" for="workspaceName">Workspace name</label>
+
+            <div class="controls"><input type="text" data-ng-model="workspace.name" id="workspaceName"
+                                         name="workspaceName"
+                                         required>
+                <div data-ng-show="form.workspaceName.$dirty && form.workspaceName.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.workspaceName.$error.required">This field is mandatory</span></div>
+            </div>
+        </div>
+
+
+        <!--Description-->
+        <div class="control-group"
+             data-ng-class="{error: form.workspaceDescription.$dirty && form.workspaceDescription.$error.required}">
+            <label class="control-label" for="workspaceDescription">Workspace description</label>
+
+            <div class="controls"><textarea rows="8" cols="60"
+                                            class="input-xlarge"
+                                            data-ng-model="workspace.description" id="workspaceDescription"
+                                            name="workspaceDescription" required></textarea>
+
+                <div data-ng-show="form.workspaceDescription.$dirty && form.workspaceDescription.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.workspaceDescription.$error.required">This field is mandatory</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!--Choice: publish the tasks of this workspace -->
+        <div class="control-group">
+            <label class="control-label">Publish tasks on the crowd</label>
+            <div class="controls"  data-tooltip="Activate the workspace if all tasks and the entire flow are defined">
+                <label>
+                    <input type="radio" id="publishTrue" name="publish" value="1"
+                           data-ng-model="workspace.publish"
+                           data-ng-disabled="workspace.isNew"
+                           />
+                    <span data-ng-class="{disabled:workspace.isNew}">Active: all tasks are currently available on the crowd-sourcing platform
+                    <span data-ng-show="workspace.isNew"><br/>(can not be selected for new workspaces)</span>
+                        </span>
+                </label>
+                <label>
+                    <input type="radio" id="publishFalse" name="publish" value="0"
+                           data-ng-model="workspace.publish"/>
+                    <span>Inactive: all tasks are not yet available on the crowd-sourcing platform</span>
+                </label>
+            </div>
+        </div>
+
+
+        <!--Choice: new or existing workspace-->
+        <div class="control-group">
+            <label class="control-label">Macrotask selection</label>
+
+            <div class="controls">
+                <label>
+                    <input type="radio" id="newMacrotaskTrue" name="newMacrotaskTrue" value="true"
+                           data-ng-checked="newMacrotask=='true'"
+                           data-ng-model="newMacrotask"/>
+                    <span>Create a new Macrotask along with the new workspace</span>
+                </label>
+                <label>
+                    <input type="radio" id="newMacrotaskFalse" name="newMacroaskFalse" value="false"
+                           data-ng-checked="newMacrotask=='false'"
+                           data-ng-model="newMacrotask"/>
+                    <span>Select an existing Macrotask from the list</span>
+                </label>
+            </div>
+        </div>
+
+        <!--User creates a new macrotask-->
+        <div data-collapse="newMacrotask=='false'">
+            <h3>Macrotask definition</h3>
+            <div data-ng-include="'partials/forms/macrotask-blank.html'"/>
+            </div>
+        <!--End creates a new macrotask-->
+
+
+
+            <!--User uses an existing macrotask    -->
+        <div data-collapse="newMacrotask=='true'">
+            <div class="control-group"
+                 data-ng-class="{error: form.macrotaskSelection.$dirty && form.macrotaskSelection.$error.required}">
+                <label class="control-label" for="macrotaskSelection">Select an existing macro task</label>
+
+                <div class="controls">
+                    <select data-ui-select2
+                            class="input-xlarge"
+                            data-ng-model="selectedMacrotaskId"
+                            id="macrotaskSelection"
+                            name="macrotaskSelection"
+                            data-style="btn-primary"
+                            >
+                        <option value=""></option>
+                        <option ng-repeat="macrotask in macrotasks" value="{{macrotask.id}}" ng->{{macrotask.name}}</option>
+                    </select>
+
+                    <div data-ng-show="form.macrotaskSelection.$dirty && form.macrotaskSelection.$invalid"
+                         class="form-error-message">Invalid:<span
+                            data-ng-show="form.macrotaskSelection.$error.required">This field is mandatory</span>
+                    </div>
+                </div>
+            </div>
+        <h3>Macrotask details</h3>
+        <div data-cs-macrotask-info data-ng-model="workspace.macrotask"/>
+        <!--End uses an existing macrotask-->
+        </div>
+
+    </form>
+</div>
+
+<!--Modal form footer-->
+<div class="modal-footer">
+
+    <!--Add/ edit-->
+    <button data-ng-click="save()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='add' || action=='edit'"
+            class="btn btn-primary">
+        Save workspace
+    </button>
+
+    <!--Delete-->
+    <button data-ng-click="delete()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='delete'"
+            class="btn btn-danger">
+        Delete workspace
+    </button>
+    <button class="btn btn-warning cancel" data-ng-click="cancel()">Cancel</button>
+</div>
+
+
+
+

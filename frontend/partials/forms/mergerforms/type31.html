@@ -1,0 +1,16 @@
+<!--Web service merger: must provide an input field to enter the URL of the web service -->
+<div class="control-group"
+     data-ng-class="{error: form.mergerData.$dirty && form.mergerData.$error.required}"><label
+        class="control-label" for="mergerData">Web service URL</label>
+
+    <div class="controls">
+        <textarea rows="8" cols="60"
+                                    class="input-xlarge"
+                                    data-ng-model="item.data" id="mergerData"
+                                    name="mergerData" required></textarea>
+
+        <div data-ng-show="form.mergerData.$dirty && form.mergerData.$invalid"
+             class="form-error-message">Invalid:<span
+                data-ng-show="form.mergerData.$error.required">This field is mandatory</span></div>
+    </div>
+</div>

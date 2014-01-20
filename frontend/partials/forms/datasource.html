@@ -1,0 +1,183 @@
+<div data-ng-controller="DatasourceCtrl">
+    <!--Modal form header-->
+    <div class="modal-header">
+        <!--Add-->
+        <div data-ng-show="action=='add'">
+            <h1>Add {{ item.type }}</h1>
+        </div>
+        <!--Edit-->
+        <div data-ng-show="action=='edit'">
+            <h1>Edit {{ item.type }}</h1>
+        </div>
+        <!--Delete-->
+        <div data-ng-show="action=='delete'">
+            <h1>Delete {{ item.type }}</h1>
+        </div>
+    </div>
+
+
+    <!--Modal form body-->
+    <div class="modal-body">
+
+    <h2>Datasource {{ item.id }} details</h2>
+
+<form name="form" novalidate class="form-horizontal">
+    <div data-ng-model="item" id="datasource">
+
+        <!--Name-->
+            <div class="control-group"
+                 data-ng-class="{error: form.datasourceName.$dirty && form.datasourceName.$error.required}"><label
+                    class="control-label" for="datasourceName">Source name</label>
+
+                <div class="controls"><input type="text" data-ng-model="item.name" id="datasourceName" name="datasourceName"
+                                             required>
+
+                    <div data-ng-show="form.datasourceName.$dirty && form.datasourceName.$invalid"
+                         class="form-error-message">Invalid:<span
+                            data-ng-show="form.datasourceName.$error.required">This field is mandatory</span></div>
+                </div>
+            </div>
+
+
+        <!--Description -->
+            <div class="control-group">
+                <label class="control-label" for="datasourceDescription">Datasource description</label>
+
+                <div class="controls"><textarea rows="8" cols="60"
+                                                class="input-xlarge"
+                                                data-ng-model="item.description" id="datasourceDescription"
+                                                name="datasourceDescription"></textarea>
+
+                </div>
+            </div>
+
+
+        <!--Datasource type-->
+        <div class="control-group"
+                >
+            <label class="control-label" for="datasourceType">Datasource type</label>
+
+            <div class="controls">
+                <select data-ui-select2
+                        class="input-xlarge"
+                        data-ng-model="item.datasource_type_id"
+                        id="datasourceType"
+                        name="datasourceType"
+                        data-style="btn-primary"
+                        required>
+                    <option data-ng-repeat="type in datasourceTypes" data-ng-disabled="type.id!=5 && type.id!=3" value="{{type.id}}">{{type.name}}</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!--Media type-->
+        <div class="control-group"
+                >
+            <label class="control-label" for="datasourceMediaType">Media type</label>
+
+            <div class="controls">
+                <select data-ui-select2
+                        class="input-xlarge"
+                        data-ng-model="item.output_media_type_id"
+                        id="datasourceMediaType"
+                        name="datasourceMediaType"
+                        data-style="btn-primary"
+                        required>
+                    <option data-ng-repeat="type in datasourceMediaTypes" data-ng-disabled="!
+                    (
+                    (type.id==2 && item.datasource_type_id==5) ||
+                    (type.id==5 && item.datasource_type_id==3)
+                    )
+                    " value="{{type.id}}">{{type.name}}</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!--Input determination-->
+        <div class="control-group">
+            <label class="control-label">Define if the input is always the same or varying for each HIT</label>
+
+            <div class="controls">
+                <label>
+                    <input type="radio" id="inputDeterminedTrue" name="inputDetermined" value="1"
+                           data-ng-model="item.output_determined" data-ng-disabled="item.datasource_type_id==3"/>
+                    <span data-ng-class="{disabled: item.datasource_type_id==3}">The input is static and determined/ is always the same (e.g. display a questionnaire's questions always in the same order)</span>
+                </label>
+                <label>
+                    <input type="radio" id="inputDeterminedFalse" name="inputDetermined" value="0"
+                           data-ng-model="item.output_determined" data-ng-disabled="item.datasource_type_id==5"/>
+                    <span data-ng-class="{disabled: item.datasource_type_id==5}">The input is dynamic and may vary in each task (e.g. each worker should visit a different URL)</span>
+                </label>
+            </div>
+        </div>
+
+
+        <!--Input order. For some datasource types, the order parameter does not make sense and is does not displayed. -->
+        <div class="control-group" data-collapse="item.datasource_type_id==1 || item.datasource_type_id==3 || item.datasource_type_id==5">
+            <label class="control-label">Define the input ordering</label>
+
+            <div class="controls">
+                <label>
+                    <input type="radio" id="inputOrderedTrue" name="inputOrdered" value="1"
+                           data-ng-model="item.output_ordered"/>
+                    <span>Input list has a natural order (e.g. a sequence of text paragraphs or rating options from good to bad)</span>
+                </label>
+                <label>
+                    <input type="radio" id="inputOrderedFalse" name="inputOrdered" value="0"
+                           data-ng-model="item.output_ordered"/>
+                    <span>There is no order in the input list (e.g. a series of images or a series of category suggestions)</span>
+                </label>
+            </div>
+        </div>
+
+
+        <!--  Define, how many items that should be generated by this datasource -->
+        <div class="control-group"
+             data-ng-class="{error: form.itemsCount.$dirty && form.itemsCount.$error.required}"><label
+                class="control-label" for="itemsCount">How many items should be generated?</label>
+            <div class="controls"><input type="number"
+                                         data-ng-model="item.items_count" id="itemsCount"
+                                         min="1"
+                                         name="itemsCount" required/>
+                <div data-ng-show="form.itemsCount.$dirty && form.itemsCount.$invalid"
+                     class="form-error-message">Invalid:<span
+                        data-ng-show="form.itemsCount.$error.required">This field is mandatory</span></div>
+            </div>
+        </div>
+
+
+
+        <h2>Define the data</h2>
+        <div data-ng-include="'partials/forms/datasourceforms/type'+item.datasource_type_id+'.html'"/>
+
+    </div>
+    <!--End ng-model part-->
+</form>
+
+</div>
+
+<!--Modal form footer-->
+<div class="modal-footer">
+
+    <!--Add/ edit-->
+    <button data-ng-click="save()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='add' || action=='edit'"
+            class="btn btn-primary">
+        Save
+    </button>
+
+    <!--Delete-->
+    <button data-ng-click="delete()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='delete'"
+            class="btn btn-danger">
+        Delete item
+    </button>
+
+    <button class="btn btn-warning cancel" data-ng-click="cancel()">Cancel</button>
+</div>
+</div>
+<!--End controller-->

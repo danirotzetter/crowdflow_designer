@@ -1,0 +1,32 @@
+<div>
+    <h2>Postprocessor task details</h2>
+
+    <div data-cs-item-info="{details: 'long'}" class="postprocessorInfo" data-ng-model="selectedItem"/>
+
+</div>
+
+<h2>Input for this task</h2>
+<div data-ng-hide="connectionsIn.length==0 || connectionsIn[0]==undefined" data-cs-connection-info="{displayTo:false, header:false, details:'short'}"
+     data-ng-model="connectionsIn[0]"/>
+<div data-ng-show="connectionsIn.length==0|| connectionsIn[0]==undefined">
+    No input available
+</div>
+<div data-ng-show="connectionsIn==undefined">
+    Could not fetch input data information
+</div>
+
+
+    <h2>Crowdsourcing panel</h2>
+
+<div class="crowdsourceTaskPanel">
+    <h3>Actions</h3>
+    <button class="btn btn-primary" data-ng-click="publishTask()">Publish task to crowd</button>
+</div>
+
+    <h2>Preview of the form, as it will be presented to the workers</h2>
+    <hr>
+        <div data-collapse="taskFormUrl===false" class="taskFormPreview">
+
+    <div data-ng-include="taskFormUrl"/>
+        </div>
+    <div data-collapse="taskFormUrl!==false">Could not retrieve the form url</div>

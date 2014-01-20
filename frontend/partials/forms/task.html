@@ -1,0 +1,240 @@
+<div data-ng-controller="TaskCtrl">
+<!--Modal form header-->
+<div class="modal-header">
+    <!--Add-->
+    <div data-ng-show="action=='add'">
+        <h1>Add {{ item.type }}</h1>
+    </div>
+    <!--Edit-->
+    <div data-ng-show="action=='edit'">
+        <h1>Edit {{ item.type }}</h1>
+    </div>
+    <!--Delete-->
+    <div data-ng-show="action=='delete'">
+        <h1>Delete {{ item.type }}</h1>
+    </div>
+</div>
+
+
+<!--Modal form body-->
+<div class="modal-body">
+
+
+    <h2>Task {{ item.id }} details</h2>
+
+    <form name="form" novalidate class="form-horizontal">
+        <div data-ng-model="item" id="task">
+            <!--Name-->
+            <div class="control-group"
+                 data-ng-class="{error: form.taskName.$dirty && form.taskName.$error.required}"><label
+                    class="control-label" for="taskName">Task name</label>
+
+                <div class="controls"><input type="text" data-ng-model="item.name" id="taskName" name="taskName"
+                                             required>
+
+                    <div data-ng-show="form.taskName.$dirty && form.taskName.$invalid"
+                         class="form-error-message">Invalid:<span
+                            data-ng-show="form.taskName.$error.required">This field is mandatory</span></div>
+                </div>
+            </div>
+
+            <!--Description-->
+            <div class="control-group">
+                <label class="control-label" for="taskDescription">Task description</label>
+
+                <div class="controls"><textarea rows="8" cols="60"
+                                                class="input-xlarge"
+                                                data-ng-model="item.description" id="taskDescription"
+                                                name="taskDescription"></textarea>
+
+                </div>
+            </div>
+
+
+            <!--Task type-->
+            <div class="control-group"
+                    >
+                <label class="control-label" for="taskType">Task type</label>
+
+                <div class="controls">
+                    <select data-ui-select2
+                            class="input-xlarge"
+                            data-ng-model="item.task_type_id"
+                            id="taskType"
+                            name="taskType"
+                            data-style="btn-primary"
+                            required>
+                        <option data-ng-repeat="type in taskTypes" data-ng-disabled="type.id!=1 && type.id!=2"
+                                value="{{type.id}}">{{type.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <h2>Specify the output settings</h2>
+            <!--Output media type-->
+            <div class="control-group"
+                    >
+                <label class="control-label" for="outputMediaType">How to submit the task's result</label>
+
+                <div class="controls">
+                    <select data-ui-select2
+                            class="input-xlarge"
+                            data-ng-model="item.output_media_type_id"
+                            id="outputMediaType"
+                            name="outputMediaType"
+                            data-style="btn-primary"
+                            required>
+                        <option data-ng-repeat="type in outputMediaTypes" data-ng-disabled="
+                    !(
+                    (type.id==2 && item.task_type_id==2) ||
+                    (type.id==3 && item.task_type_id==1)
+                    )
+                    "
+                                value="{{type.id}}">{{type.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!--Output determination-->
+            <div class="control-group" data-collapse="item.output_media_type_id>=3">
+                <label class="control-label">Set the determination of the result options</label>
+
+                <div class="controls">
+                    <label>
+                        <input type="radio" id="outputDeterminedTrue" name="outputDetermined" value="1"
+                               data-ng-disabled="item.task_type_id!=1"
+                               data-ng-model="item.output_determined"/>
+                        <span>Output is static/ determined (i.e. selection of pre-defined values)</span>
+                    </label>
+                    <label>
+                        <input type="radio" id="outputDeterminedFalse" name="outputDetermined" value="0"
+                               data-ng-disabled="item.task_type_id==1"
+                               data-ng-model="item.output_determined"/>
+                        <span>Free/ dynamic output (users can type in 'any' value</span>
+                    </label>
+                </div>
+            </div>
+
+
+            <!--Mapping-->
+            <div class="control-group" data-collapse="item.output_media_type_id==4">
+                <label class="control-label">Set the output multiplicity</label>
+
+                <div class="controls">
+                    <label>
+                        <input type="radio" id="outputMappingType1" name="outputMappingType" value="12"
+                               data-ng-model="item.output_mapping_type_id"/>
+                        <span>There is exactly one answer for the entire crowd-sourced task</span>
+                    </label>
+                    <!--Mapping type 1 subtypes-->
+                    <div data-collapse="item.output_mapping_type_id==2" class="indented">
+                        <label>
+                            <input type="radio" id="outputMappingType11" name="outputMappingType1Type"
+                                   data-ng-disabled="true"
+                                   value="11"
+                                   data-ng-model="item.output_mapping_type_id">
+                            <span class="disabled">The answer is binary (answer of type "yes/no" or "agree/ disagree")</span>
+                        </label>
+                        <label>
+                            <input type="radio" id="outputMappingType12" name="outputMappingType1Type"
+                                   value="12"
+                                   data-ng-model="item.output_mapping_type_id"/>
+                            <span>The answer is a single term or selection (e.g. "best matching category for an image" or exactly one translation for a phrase)</span>
+                        </label>
+                    </div>
+
+                    <label>
+                        <input type="radio" id="outputMappingType2" name="outputMappingType" value="2"
+                               data-ng-disabled="item.task_type_id==1"
+                               data-ng-model="item.output_mapping_type_id"/>
+                        <span data-ng-class="{disabled:item.task_type_id==1}">Multiple results are possible per executed task (e.g. a series of proposed image categories or a series of keyword suggestions)</span>
+                    </label>
+                </div>
+            </div>
+            <!--End mapping-->
+
+            <!--Output order-->
+            <div class="control-group"
+                 data-collapse="item.output_media_type_id>=2 || item.output_determined==0 || item.output_mapping_type_id!=2">
+                <label class="control-label">Define the output order</label>
+
+                <div class="controls">
+                    <label>
+                        <input type="radio" id="outputOrderedTrue" name="outputOrdered" value="1"
+                               data-ng-model="item.output_ordered"
+                               data-ng-disabled="item.task_type_id==1"
+                                />
+                        <span>Ordered (e.g. "from good to bad")</span>
+                    </label>
+                    <label>
+                        <input type="radio" id="outputOrderedFalse" name="outputOrdered" value="0"
+                               data-ng-model="item.output_ordered"/>
+                        <span>No order (e.g. tag an image - there is no natural order)</span>
+                    </label>
+                </div>
+            </div>
+
+
+            <!--Crowd-sourcing parameters -->
+            <fieldset>
+                <legend>Define the crowd-sourcing parameters</legend>
+                <div class="control-group" data-ng-repeat="parameter in parameters"
+                     data-collapse="{{ '!('+parameter.show+')'}}"
+                        >
+                    <label class="control-label">{{ parameter.label }}</label>
+
+                    <div class="controls">
+                        <input name="par{{parameter.id}}" id="par{{parameter.id}}" type="{{parameter.type}}"
+                               data-ng-model="item.parameters[parameter.id]" data-ng-disabled="{{parameter.disabled}}"
+                               min="{{parameter.min}}" step="{{parameter.step}}">
+                    <div data-ng-show="parameter.isDuration" data-ng-model="item.parameters[parameter.id]" data-cs-duration/>
+                    <div data-ng-show="parameter.id=='reward'" data-ng-model="item" data-cs-payment/>
+                    </div>
+                </div>
+            </fieldset>
+
+
+            <!--Include additional form elements, depending on the task type-->
+            <div data-ng-include="'partials/forms/taskforms/type'+item.task_type_id+'.html'"/>
+
+        </div>
+        <!--End item model-->
+
+
+    </form>
+
+
+    <hr>
+
+    <div data-cs-connection-info="{displayTo:false}" data-ng-model="connectionsIn[0]"/>
+
+
+</div>
+
+<!--Modal form footer-->
+<div class="modal-footer">
+
+    <!--Add/ edit-->
+    <button data-ng-click="save()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='add' || action=='edit'"
+            class="btn btn-primary">
+        Save
+    </button>
+
+    <!--Delete-->
+    <button data-ng-click="delete()"
+            data-ng-disabled="form.$invalid"
+            data-ng-show="action=='delete'"
+            class="btn btn-danger">
+        Delete item
+    </button>
+
+    <button class="btn btn-warning cancel" data-ng-click="cancel()">Cancel</button>
+</div>
+<!--End modal footer-->
+
+</div>
+<!--End controller-->

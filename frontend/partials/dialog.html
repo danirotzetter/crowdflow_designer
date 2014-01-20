@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h1>{{title}}</h1>
+</div>
+
+<div class="modal-body" data-ng-bind-html-unsafe="text">
+</div>
+
+
+<div class="modal-footer">
+<span data-ng-repeat="button in buttons">
+        <button data-ng-click="clicked(button)" class="{{button.class}}">{{button.text}}</button>
+        </span>
+
+</div>;

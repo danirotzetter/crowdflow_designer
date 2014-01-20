@@ -1,0 +1,311 @@
+
+<div class="container-fluid">
+<div class="row-fluid">
+
+
+<div class="span2">
+    <!-- List of the connections-->
+    <div class="connectionsContainer">
+        <h2>Connections overview</h2>
+
+        <div data-cs-wait-for="isLoaded" data-ng-model="loadingMessage" id="connectionsContainerLoader">
+            <div data-cs-connections-list="{name: 'DataSources'}" data-ng-model="datasources"/>
+            <div data-cs-connections-list="{name:'Task'}" data-ng-model="tasks"/>
+            <div data-cs-connections-list="{name: 'Mergers'}" data-ng-model="mergers"/>
+            <div data-cs-connections-list="{name: 'Splitters'}" data-ng-model="splitters"/>
+            <div data-cs-connections-list="{name: 'Postprocessors'}" data-ng-model="postprocessors"/>
+        </div>
+        <!--End loader-->
+    </div>
+</div>
+
+<div class="span10">
+<h1>Composer</h1>
+
+<div class="mainPanelHeader" data-ng-hide="permanentlyDisableHeader">
+    <div data-cs-wait-for="isLoaded" data-ng-model="loadingMessage" id="mainPanelHeaderLoader">
+        <span>Hide header</span>
+
+        <div class="btn-group">
+            <input data-bs-switch
+                   data-ng-model="collapseMainPanelHeader"
+                   data-switch-size=""
+                   data-switch-animate="true"
+                   data-switch-on-label="On"
+                   data-switch-off-label="Off"
+                   data-switch-on="primary"
+                   data-switch-off="primary"
+                   data-switch-click="toggleHeader"
+                    >
+        </div>
+
+        <button type="button" class="btn btn-info" data-ng-click="link('/crowdsource/'+workspace.id)">
+            <i class="icon-share"></i>Manually crowd-source tasks
+        </button>
+        <div id="collapsibleHeader" data-collapse="collapseMainPanelHeader">
+            <div class="workspaceMetadata">
+                <h4>Workspace metadata</h4>
+
+                <div data-cs-workspace-info data-ng-model="workspace"/>
+
+                <h4>Macro task metadata</h4>
+
+                <div data-cs-macrotask-info data-ng-model="workspace.macrotask"/>
+            </div>
+            <!--End compose metadata-->
+
+            <div class="composeLogs">
+                <div data-cs-log="{type:'alert'}"></div>
+                <div data-cs-log="{type:'log'}"></div>
+            </div>
+        </div>
+        <!--End collapsible header-->
+    </div>
+    <!--End loader-->
+
+</div>
+<!--End main panel header-->
+
+
+<div class="mainPanelBody" id="mainPanelBody">
+<div data-cs-wait-for="isLoaded" data-ng-model="loadingMessage" id="mainPanelBodyLoader">
+<!--START MENU-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <ul class="nav">
+            <!--General-->
+            <li>
+                <button class="btn" data-tooltip="Repaint the diagram"
+                        onclick="jsPlumb.repaintEverything();"><i
+                        class="icon-refresh"></i></button>
+            </li>
+            <li>
+                <a>Display progress</a>
+            </li>
+            <li>
+                <div class="btn-group">
+                    <input data-bs-switch
+                           data-ng-model="showProgressInfo"
+                           data-switch-size=""
+                           data-switch-animate="true"
+                           data-switch-on-label="On"
+                           data-switch-off-label="Off"
+                           data-switch-on="primary"
+                           data-switch-off="primary"
+                            >
+                </div>
+            </li>
+
+            <!--Workspace-->
+            <li><a>Workspace</a></li>
+            <li>
+                <div class="btn-group">
+                    <button class="btn" data-ng-click="saveWorkspace()"><i class="icon-hdd"></i>Save
+                    </button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li data-ng-hide="true"><a href="#" class="disabled"><i class="icon-file"></i>New composition (N/A)</a></li>
+                        <li data-ng-hide="true"><a href="#" class="disabled"><i class="icon-folder-open"></i>Import (N/A)</a></li>
+                        <li><a data-ng-click="workspace.publish=(1-workspace.publish)"><i class="icon-trash"></i><span data-ng-show="workspace.publish==0">Activate: enable tasks on crowd</span><span data-ng-show="workspace.publish==1">Deactivate: disable tasks on crowd</span></a></li>
+                        <li><a data-ng-click="clearWorkspace()"><i class="icon-trash"></i>Clear all</a></li>
+                        <li><a data-ng-click="showResults()"><i class="icon-flag"></i>Show results</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!--Tasks-->
+            <li><a>Tasks</a></li>
+            <li>
+                <div class="btn-group">
+                    <button class="btn" data-ng-click="editItem({type:'task'}, 'add')"><i
+                            class="icon-plus"></i>Add
+                    </button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ><a data-ng-click="editItem({type:'task'}, 'add')"><i class="icon-plus"></i>New Task</a></li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <!--Postprocessors-->
+            <li><a>PostProcessors</a></li>
+            <li>
+                <div class="btn-group">
+                    <button class="btn" data-ng-click="editItem({type:'postprocessor'}, 'add')"><i
+                            class="icon-plus"></i>Add
+                    </button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ><a data-ng-click="editItem({type:'postprocessor'}, 'add')"><i class="icon-plus"></i>New Postprocessor</a></li>
+                    </ul>
+                </div>
+            </li>
+
+
+            <!--Mergers-->
+            <li><a>Mergers</a></li>
+            <li>
+                <div class="btn-group">
+                    <button class="btn" data-ng-click="editItem({type:'merger'}, 'add')"><i
+                            class="icon-plus"></i>Add
+                    </button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ><a data-ng-click="editItem({type:'merger'}, 'add')"><i class="icon-plus"></i>New Merger</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!--Datasources-->
+            <li><a>Data sources</a></li>
+            <li>
+                <div class="btn-group">
+                    <button class="btn" data-ng-click="editItem({type:'datasource'}, 'add')"><i
+                            class="icon-plus"></i>Add
+                    </button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ><a data-ng-click="editItem({type:'datasource'}, 'add')"><i class="icon-plus"></i>New DataSource</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!--Splitters-->
+            <li><a>Splitters</a></li>
+            <li>
+                <div class="btn-group">
+                    <button class="btn" data-ng-click="editItem({type:'splitter'}, 'add')"><i
+                            class="icon-plus"></i>Add
+                    </button>
+                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ><a data-ng-click="editItem({type:'splitter'}, 'add')"><i class="icon-plus"></i>New Splitter</a></li>
+                    </ul>
+                </div>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+<!--END MENU-->
+
+
+<!--Lists with the currently available items-->
+
+<!--The workspace (serving as final result destination) -->
+<div data-ng-switch="workspace" data-cs-wait-for="workspace" id="workspaceWrapper">
+    <!--Introducing switch such that the itemInfo directive is not applied to a non-defined workspace object, i.e. it is loaded only once the workspace is available-->
+    <div data-ng-switch-when="false">
+        <!--Will be hidden anyway if workspace is not set-->
+        ...loading workspace
+    </div>
+    <div
+            data-ng-switch-default
+            data-ng-model="workspace"
+            data-cs-item-info="{class:'workspace-result', details:'tooltipbox'}"
+            data-cs-compose-item="{endpoints:[{type:'in', name:'in'}]}"
+            id="workspace{{ workspace.id }}"
+            >
+    </div>
+</div>
+
+
+<!--Mergers-->
+<div class="mergerList" id="mergerList">
+    <div
+            data-ng-repeat="child in mergers"
+            data-cs-progress-info="{{child.merger_type_id==11}}"
+            data-cs-compose-item
+            id="merger{{child.id}}"
+            index="{{$index}}"
+            data-ng-model="child"
+            data-ng-class="{isNew: child.isNew}"
+            data-cs-item-info="{details:'tooltipbox'}"
+            >
+    </div>
+</div>
+<!--Splitters-->
+<div class="splitterList" id="splitterList">
+    <div
+            data-ng-repeat="child in splitters"
+            data-cs-compose-item
+            id="splitter{{child.id}}"
+            index="{{$index}}"
+            data-ng-model="child"
+            data-ng-class="{isNew: child.isNew}"
+            data-cs-item-info="{details:'tooltipbox'}"
+            >
+    </div>
+</div>
+
+<!--Tasks - add third endpoint for loopback from validators -->
+<div class="taskList" id="taskList">
+    <div
+            data-ng-repeat="child in tasks"
+            data-cs-progress-info
+            data-cs-compose-item="{endpoints:[{type:'out', name:'out'}, {type:'in', name:'in'}, {type:'in', name:'inValidator'}]}"
+            id="task{{child.id}}"
+            index="{{$index}}"
+            data-ng-model="child"
+            data-ng-class="{isNew: child.isNew}"
+            data-cs-item-info="{toolbar:true}"
+            >
+    </div>
+
+
+    <!--Post-Processors-->
+    <div
+            data-ng-repeat="child in postprocessors"
+            data-cs-progress-info
+            data-cs-compose-item
+            id="postprocessor{{child.id}}"
+            index="{{$index}}"
+            data-ng-model="child"
+            data-ng-class="{isNew: child.isNew}"
+            data-cs-item-info="{details:'tooltipbox'}">
+    </div>
+</div>
+
+<!--Datasources-->
+<div class="datasourcesList" id="datasourcesList">
+    <div
+            data-ng-repeat="child in datasources"
+            data-cs-compose-item="{endpoints:[{type:'out', name:'out'}]}"
+            id="datasource{{child.id}}"
+            index="{{$index}}"
+            data-ng-model="child"
+            data-ng-class="{isNew: child.isNew}"
+            data-cs-item-info="{toolbar:true}"
+            >
+
+    </div>
+</div>
+<!--End datasources-->
+</div>
+<!--End loader-->
+</div>
+<!--End main panel body-->
+</div>
+<!--End span10-->
+
+</div>
+<!--End row fluid-->
+
+
+</div>
+<!--End fluid container-->
+

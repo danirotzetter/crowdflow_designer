@@ -1,0 +1,113 @@
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span2 crowdsourcingItems">
+            <div id="crowdsourcingItems" data-cs-wait-for="isLoaded">
+                <!--Tasks-->
+                <div
+                        data-ng-repeat="child in tasks"
+                        id="task{{child.id}}"
+                        index="{{$index}}"
+                        data-ng-model="child"
+                        data-cs-item-info="{class:'activeable task', ngClass:'active: selectedItem.type == child.type && selectedItem.id == child.id'}"
+                        data-ng-click="selectItem(child)"
+                        >
+                </div>
+                <div data-ng-show="tasks.length==0">No micro-tasks were defined yet</div>
+                <!--End tasks-->
+                <!--Mergers-->
+                <div
+                        data-ng-repeat="child in mergers"
+                        id="merger{{child.id}}"
+                        index="{{$index}}"
+                        data-ng-model="child"
+                        data-ng-show="child.merger_type_id==12"
+                        data-cs-item-info="{class:'activeable merger', ngClass:'active: selectedItem.type == child.type && selectedItem.id == child.id'}"
+                        data-ng-click="selectItem(child)"
+                        >
+                </div>
+                <!--End mergers-->
+                <!--Postprocessors-->
+                <div
+                        data-ng-repeat="child in postprocessors"
+                        id="postprocessor{{child.id}}"
+                        index="{{$index}}"
+                        data-ng-model="child"
+                        data-ng-show="child.postprocessor_type_id==12"
+                        data-cs-item-info="{class:'activeable postprocessor', ngClass:'active: selectedItem.type == child.type && selectedItem.id == child.id'}"
+                        data-ng-click="selectItem(child)"
+                        >
+                </div>
+            <!--End Postprocessors-->
+            </div>
+        </div>
+
+        <div class="span10">
+            <div class="mainPanelHeader">
+                    <span>Hide header</span>
+                <div class="btn-group">
+                    <input data-bs-switch
+                           data-ng-model="collapseMainPanelHeader"
+                           data-switch-size=""
+                           data-switch-animate="true"
+                           data-switch-on-label="On"
+                           data-switch-off-label="Off"
+                           data-switch-on="primary"
+                           data-switch-off="primary"
+                            >
+                </div>
+
+                <button type="button" class="btn btn-info" data-ng-click="link('/compose/'+workspace.id)">
+                    <i class="icon-edit"></i>Compose macrotask
+                </button>
+
+                <div id="collapsibleHeader" data-collapse="collapseMainPanelHeader">
+                    <div class="workspaceMetadata">
+                        <h4>Workspace metadata</h4>
+
+                        <div data-cs-workspace-info data-ng-model="workspace"/>
+                        <h4>Macrotask metadata</h4>
+
+                        <div data-cs-macrotask-info data-ng-model="workspace.macrotask"/>
+                    </div>
+                    <!--End compose metadata-->
+
+                    <div class="composeLogs">
+                        <div data-cs-log="{type:'alert'}"></div>
+                        <div data-cs-log="{type:'log'}"></div>
+                    </div>
+                </div>
+                <!--End collapsible header-->
+
+            </div>
+            <!--End main panel header-->
+
+
+            <div class="mainPanelBody">
+                <div id="mainPanelBodyLoader" data-cs-wait-for="taskIsLoaded" data-ng-model="loadingMessage">
+                    <!--Display appropriate crowdsourcing form, depending on the selected item -->
+                    <div data-ng-switch="selectedItem.id">
+                        <div data-ng-switch-when="undefined">
+                            <!--No item selected-->
+                            Please select an item from the left-hand side of the page
+                        </div>
+
+                        <div data-ng-switch-default>
+                            <!--An item is selected-->
+                            <div data-ng-include="taskIsLoaded? 'partials/crowdsourcer/'+selectedItem.type+'.html':''"/>
+                        </div>
+                    </div>
+                    <!--End switch on the selected item-->
+                </div>
+            </div>
+            <!--End display appropriate crowdsourcing form, depending on the selected item -->
+        </div>
+        <!--End main panel-->
+
+    </div>
+    <!--End row fluid-->
+
+</div>
+<!--End container fluid-->
+
+
+</div>

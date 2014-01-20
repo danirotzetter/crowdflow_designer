@@ -1,0 +1,13 @@
+<!-- 'Select the best option' merger: must provide an input field to specify how many votes are needed before choosing the most popular answer -->
+<div class="control-group"
+     data-ng-class="{error: form.mergerData.$dirty && form.mergerData.$error.required}"><label
+        class="control-label" for="mergerData">Execute merging after how many votes?</label>
+
+    <div class="controls"><input type="number"
+                                    data-ng-model="item.data" id="mergerData"
+                                    name="mergerData" required/>
+        <div data-ng-show="form.mergerData.$dirty && form.mergerData.$invalid"
+             class="form-error-message">Invalid:<span
+                data-ng-show="form.mergerData.$error.required">This field is mandatory</span></div>
+    </div>
+</div>

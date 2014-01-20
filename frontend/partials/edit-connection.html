@@ -1,0 +1,71 @@
+<div class="modal-header">
+    <!--Create a connection-->
+    <div data-ng-show="action=='establish'">
+        <h1>Create a new connection</h1>
+    </div>
+    <!--Detach a connection-->
+    <div data-ng-show="action=='detach'">
+        <h1>Confirm detaching a connection</h1>
+    </div>
+    <!--Change a connection-->
+    <div data-ng-show="action=='change'">
+        <h1>Change a connection</h1>
+    </div>
+    <!--Connection information-->
+    <div data-ng-show="action=='info'">
+        <h1>Connection information</h1>
+    </div>
+
+</div>
+
+<div class="modal-body">
+
+
+    <h2>Source</h2>
+
+    <div data-cs-item-info="{details: 'long'}" data-ng-model="connection.from.item"/>
+
+
+    <h2>Destination</h2>
+
+    <div data-cs-item-info="{details: 'long'}" data-ng-model="connection.to.item"/>
+
+    <!--If the connection is edited, then another item is involved, the "old" destination-->
+    <div data-ng-show="action=='change'">
+
+        <h2>Old destination</h2>
+
+        <div data-cs-item-info="{details: 'long'}" data-ng-model="connection.toOld.item"/>
+    </div>
+</div>
+
+</div>
+
+
+<div class="modal-footer">
+
+    <!--Establish a connection-->
+    <div data-ng-show="action=='establish'">
+        <button data-ng-click="close(true)" class="btn btn-primary">Save</button>
+        <button data-ng-click="close(false)" class="btn btn-warning cancel">Cancel</button>
+    </div>
+    <!--Detach a connection-->
+    <div data-ng-show="action=='detach'">
+        <button data-ng-click="close(true)" class="btn btn-primary">Detach connection</button>
+        <button data-ng-click="close(false)" class="btn btn-warning cancel">Cancel; keep connection</button>
+    </div>
+    <!--Edit a connection-->
+    <div data-ng-show="action=='edit'">
+        <button data-ng-click="close(true)" class="btn btn-primary">Confirm modification</button>
+        <button data-ng-click="close(false)" class="btn btn-warning cancel">Cancel modification</button>
+    </div>
+    <!--Change a connection-->
+    <div data-ng-show="action=='change'">
+        <button data-ng-click="close(true)" class="btn btn-primary">Confirm change</button>
+        <button data-ng-click="close(false)" class="btn btn-warning cancel">Cancel change</button>
+    </div>
+    <!--Display a connection-->
+    <div data-ng-show="action=='info'">
+        <button data-ng-click="close(true)" class="btn btn-primary">Close</button>
+    </div>
+</div>;
